@@ -13,6 +13,13 @@ case $1 in
     ARTIFACT_URL="Not available"
     ;;
 
+  "waiting" )
+    EMBED_COLOR=16705372
+    STATUS_MESSAGE="Waiting for Approval"
+    ARTIFACT_URL="Not available"
+    ACTION="> [Click to trigger manual deployment]($CI_PIPELINE_URL)"
+    ;;
+  
   * )
     EMBED_COLOR=0
     STATUS_MESSAGE="Status Unknown"
@@ -58,7 +65,7 @@ if [ -z $LINK_ARTIFACT ] || [ $LINK_ARTIFACT = false ] ; then
       },
       "title": "'"$COMMIT_SUBJECT"'",
       "url": "'"$URL"'",
-      "description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
+      "description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"${CREDITS//$'\n'/ }"\\n\\n"$ACTION"'",
       "fields": [
         {
           "name": "Commit",
@@ -86,7 +93,7 @@ else
 			},
 			"title": "'"$COMMIT_SUBJECT"'",
 			"url": "'"$URL"'",
-			"description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
+			"description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"${CREDITS//$'\n'/ }"\\n\\n"$ACTION"\\n\\n""'",
 			"fields": [
 			{
 				"name": "Commit",
